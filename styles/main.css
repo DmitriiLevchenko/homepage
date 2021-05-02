@@ -1,0 +1,41 @@
+.iridescent-text {
+    animation: 5s linear 0s infinite alternate iridescent-anim;
+  }
+  .clickable-icon {
+    border: 3px solid black;
+    height: 240px;
+    width: 200px;
+  }
+  .clickable-icon:hover {
+    cursor: pointer;
+    animation: 5s linear 0s infinite alternate border-anim;
+  }
+  @keyframes iridescent-anim {
+    from {
+      color: #658f82;
+    }
+    25% {
+      color: #b7d4ff;
+    }
+    50% {
+      color: #fed876;
+    }
+    75% {
+      color: #db6b88;
+    }
+    to {
+      color: #d8664d;
+    }
+  }
+  
+  @keyframes border-anim {
+    from {
+      border: 3px solid #658f82;
+  
+    }
+    to {
+      border: 3px solid #d8664d;
+  
+    }
+  }
+  

@@ -16,17 +16,19 @@
       rel="stylesheet"
       href="https://binary-studio-academy.github.io/stage-2/assets/stylesheets/base.css"
     />
+    <link rel="stylesheet" href="styles/main.css">
   </head>
   <body>
     <main>
       <article>
         <div class="page" style="border-color: midnightblue">
-          <div class="stackable grid">
+          <div class="stackable grid" id = "content">
             <div class="row">
               <div class="three wide center aligned column">
                 <div class="avatar-wrapper">
                   <object
-                    class="avatar"
+                  id="avatar"
+                    class="avatar clickable-icon"
                     data="./assets/images/avatar.png"
                     role="img"
                     aria-label="My profile picture"
@@ -37,7 +39,7 @@
                 <div class="stackable grid">
                   <div class="sixteen wide column">
                     <!-- Name, job, contacts -->
-                    <h1 class="name">Dmitry Levchenko</h1>
+                    <h1 class="name iridescent-text">Dmitry Levchenko</h1>
                     <div class="job">beginner full stack developer</div>
                     <ul class="contacts">
                       <li>
@@ -233,4 +235,5 @@
       </article>
     </main>
   </body>
+  <script src = "index.js"></script>
 </html>
