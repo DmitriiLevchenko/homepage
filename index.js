@@ -1,4 +1,4 @@
-let avatar = document.querySelector("#avatar");
+var avatar = document.querySelector("#avatar");
 avatar.addEventListener("click", onAvatarPressHandler);
 
 async function onAvatarPressHandler() {
@@ -6,7 +6,9 @@ async function onAvatarPressHandler() {
   const pageHeight = 700;
   const pageWidth = pageContent.offsetWidth - 40;
   const canvas = initCanvas(pageHeight, pageWidth);
-  await hideContent(pageContent);
+
+  await Promise.race([ballTransform(avatar), hideContent(pageContent)]);
+  console.log("done");
   pageContent.innerHTML = "";
   pageContent.appendChild(canvas);
   await showContent(pageContent);
@@ -26,7 +28,16 @@ async function hideContent(content) {
   content.addEventListener("animationend", function () {
     content.classList.remove("hide");
   });
-  await timeout(2000);
+  return timeout(2000);
+}
+async function ballTransform(content) {
+  content.classList.add("ball-transform");
+  content.classList.remove("avatar");
+  content.classList.remove("clickable-icon");
+  content.addEventListener("animationend", function () {
+    content.classList.remove("ball-transform");
+  });
+  return timeout(2000);
 }
 async function showContent(content) {
   content.classList.add("show");

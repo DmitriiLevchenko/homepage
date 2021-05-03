@@ -3,8 +3,8 @@ function initBreakOutGame(canvas, ...settings) {
   var ctx = canvas.getContext("2d");
   var x = canvas.width / 2;
   var y = canvas.height - 30;
-  var mindy = settings.mindy || -2.8;
-  var mindx = settings.mindx || -2.8;
+  var mindy = settings.mindy || -3;
+  var mindx = settings.mindx || -3;
   var dx = mindx;
   var dy = mindy;
   var paddleHeight = 10;
