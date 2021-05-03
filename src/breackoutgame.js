@@ -1,82 +1,76 @@
-class BreaakOut {
-  constructor(...settings) {
-    this.canvas = document.querySelector("#canvas");
-    this.ctx = this.canvas.getContext("2d");
-    console.log("this", this);
-    console.log(this.ctx);
-    console.log(this.ctx.clearRect);
-    this.ballRadius = settings.ballRadius || 10;
-    this.brickRowCount = settings.brickRowCount || 5;
-    this.brickColumnCount = settings.brickColumnCount || 3;
-    this.brickWidth = 75;
-    debugger;
-    this.brickHeight = 20;
-    this.brickPadding = 10;
-    this.brickOffsetTop = 30;
-    this.brickOffsetLeft = 30;
-    this.x = this.canvas.width / 2;
-    this.y = this.canvas.height - 30;
-    this.dx = 2.1;
-    this.dy = 2.1;
-    this.paddleHeight = 10;
-    this.paddleWidth = 75;
-    this.paddleX = (canvas.width - this.paddleWidth) / 2;
-    this.rightPressed = false;
-    this.leftPressed = false;
-    this.score = 0;
-    this.tick = 0;
-    this.init().bind(this);
-  }
-  init() {
-    this.bricks = [];
-    for (var c = 0; c < this._brickColumnCount; c++) {
-      bricks[c] = [];
-      for (var r = 0; r < this._brickRowCount; r++) {
-        bricks[c][r] = { x: 0, y: 0, status: 3 };
-      }
-    }
+function initBreakOutGame(canvas, ...settings) {
+  var ballRadius = settings.ballRadius || 10;
+  var ctx = canvas.getContext("2d");
+  var x = canvas.width / 2;
+  var y = canvas.height - 30;
+  var mindy = settings.mindy || -2.8;
+  var mindx = settings.mindx || -2.8;
+  var dx = mindx;
+  var dy = mindy;
+  var paddleHeight = 10;
+  var paddleWidth = 90;
+  var paddleX = (canvas.width - paddleWidth) / 2;
+  var rightPressed = false;
+  var leftPressed = false;
+  var brickRowCount = 6;
+  var brickColumnCount = 4;
+  var brickWidth = settings.brickWidth || 90;
+  var brickHeight = settings.brickHeight || 25;
+  var brickPadding = settings.brickPadding || 10;
+  var brickOffsetTop = settings.brickOffsetTop || canvas.height / 5;
+  var brickOffsetLeft =
+    settings.brickOffsetTop ||
+    (canvas.width - (brickWidth + brickPadding) * brickRowCount) / 2;
+  var score = 0;
+  var tick = 3;
 
-    document.addEventListener("keydown", this.keyDownHandler, false);
-    document.addEventListener("keyup", this.keyUpHandler, false);
-    document.addEventListener("mousemove", this.mouseMoveHandler, false);
+  var bricks = [];
+  for (var c = 0; c < brickColumnCount; c++) {
+    bricks[c] = [];
+    for (var r = 0; r < brickRowCount; r++) {
+      bricks[c][r] = { x: 0, y: 0, status: 3 };
+    }
+  }
 
-    setInterval(this.draw, 10);
-  }
-  keyDownHandler(e) {
+  document.addEventListener("keydown", keyDownHandler, false);
+  document.addEventListener("keyup", keyUpHandler, false);
+  document.addEventListener("mousemove", mouseMoveHandler, false);
+
+  function keyDownHandler(e) {
     if (e.keyCode == 39) {
-      this.rightPressed = true;
+      rightPressed = true;
     } else if (e.keyCode == 37) {
-      this.leftPressed = true;
+      leftPressed = true;
     }
   }
-  keyUpHandler(e) {
+  function keyUpHandler(e) {
     if (e.keyCode == 39) {
-      this.rightPressed = false;
+      rightPressed = false;
     } else if (e.keyCode == 37) {
-      this.leftPressed = false;
+      leftPressed = false;
     }
   }
-  mouseMoveHandler(e) {
-    var relativeX = e.clientX - this.canvas.offsetLeft;
-    if (relativeX > 0 && relativeX < this.canvas.width) {
-      this.paddleX = relativeX - this.paddleWidth / 2;
+  function mouseMoveHandler(e) {
+    var relativeX = e.clientX - canvas.offsetLeft;
+    if (relativeX > 0 && relativeX < canvas.width) {
+      paddleX = relativeX - paddleWidth / 2;
     }
   }
-  collisionDetection() {
-    for (var c = 0; c < this.brickColumnCount; c++) {
-      for (var r = 0; r < this.brickRowCount; r++) {
+  function collisionDetection() {
+    for (var c = 0; c < brickColumnCount; c++) {
+      for (var r = 0; r < brickRowCount; r++) {
         var b = bricks[c][r];
         if (b.status > 0) {
           if (
-            this.x > b.x &&
-            this.x < b.x + this.brickWidth &&
-            this.y > b.y &&
-            this.y < b.y + this.brickHeight
+            x > b.x &&
+            x < b.x + brickWidth &&
+            y > b.y &&
+            y < b.y + brickHeight
           ) {
-            this.dy = -dy;
+            dy = -dy;
             b.status -= 1;
-            this.score++;
-            if (score == this.brickRowCount * this.brickColumnCount * 3) {
+            score++;
+            if (score == brickRowCount * brickColumnCount * tick) {
               alert("YOU WIN, CONGRATS!");
               document.location.reload();
             }
@@ -86,112 +80,112 @@ class BreaakOut {
     }
   }
 
-  drawBall() {
-    this.ctx.beginPath();
-    this.ctx.arc(x, this.y, this.ballRadius, 0, Math.PI * 2);
-    this.ctx.fillStyle = "#0095DD";
-    this.ctx.fill();
-    this.ctx.closePath();
+  function drawBall() {
+    ctx.beginPath();
+    ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+    ctx.fillStyle = "#0095DD";
+    ctx.fill();
+    ctx.closePath();
   }
-  drawPaddle() {
-    this.ctx.beginPath();
-    this.ctx.rect(
-      paddleX,
-      this.canvas.height - this.paddleHeight,
-      this.paddleWidth,
-      this.paddleHeight
-    );
-    this.ctx.fillStyle = "#0095DD";
-    this.ctx.fill();
-    this.ctx.closePath();
+  function drawPaddle() {
+    ctx.beginPath();
+    if (paddleX > canvas.width - paddleWidth) {
+      paddleX = canvas.width - paddleWidth;
+    } else if (paddleX < 0) {
+      paddleX = 0;
+    }
+
+    ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+    ctx.fillStyle = "#0095DD";
+    ctx.fill();
+    ctx.closePath();
   }
-  drawBricks() {
-    for (var c = 0; c < this.brickColumnCount; c++) {
-      for (var r = 0; r < this.brickRowCount; r++) {
+  function drawBricks() {
+    for (var c = 0; c < brickColumnCount; c++) {
+      for (var r = 0; r < brickRowCount; r++) {
         if (bricks[c][r].status > 0) {
-          var brickX =
-            r * (brickWidth + this.brickPadding) + this.brickOffsetLeft;
-          var brickY =
-            c * (brickHeight + this.brickPadding) + this.brickOffsetTop;
+          var brickX = r * (brickWidth + brickPadding) + brickOffsetLeft;
+          var brickY = c * (brickHeight + brickPadding) + brickOffsetTop;
           bricks[c][r].x = brickX;
           bricks[c][r].y = brickY;
-          this.ctx.beginPath();
-          this.ctx.rect(brickX, brickY, this.brickWidth, this.brickHeight);
+          ctx.beginPath();
+          ctx.rect(brickX, brickY, brickWidth, brickHeight);
           bricks[c][r].status == 3
             ? (ctx.fillStyle = "#0095DD")
             : bricks[c][r].status == 2
             ? (ctx.fillStyle = "yellow")
             : (ctx.fillStyle = "red");
-          this.ctx.fill();
-          this.ctx.closePath();
+          ctx.fill();
+          ctx.closePath();
         }
       }
     }
   }
-  drawScore() {
-    this.ctx.font = "16px Arial";
-    this.ctx.fillStyle = "#0095DD";
-    this.ctx.fillText("Score: " + this.score, 8, 20);
+  function drawScore() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("Score: " + score + "(score raise speed)", 8, 20);
   }
 
-  draw() {
-    console.log(this);
-    debugger;
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.drawBricks();
-    this.drawBall();
-    this.drawPaddle();
-    this.drawScore();
-    this.collisionDetection();
-    this.checkCollision();
-    this.move();
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    setParams();
+    drawBricks();
+    drawBall();
+    drawPaddle();
+    drawScore();
+    collisionDetection();
+    checkCollision();
+    move();
+  }
+  function setParams() {
+    dx = dx > 0 ? -1 * (mindx * (1 + score / 100)) : mindx * (1 + score / 100);
+    dy = dy > 0 ? -1 * (mindy * (1 + score / 100)) : mindy * (1 + score / 100);
   }
   checkCollision = () => {
-    if (
-      x + this.dx > this.canvas.width - this.ballRadius ||
-      this.x + this.dx < this.ballRadius
-    ) {
-      this.dx = -dx;
+    if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+      dx = -dx;
     }
-    if (y + this.dy < this.ballRadius) {
-      this.dy = -dy;
-    } else if (y + this.dy > this.canvas.height - this.ballRadius) {
-      if (x > this.paddleX && this.x < this.paddleX + this.paddleWidth) {
-        this.dy = -dy;
+    if (y + dy < ballRadius) {
+      dy = -dy;
+    } else if (y + dy > canvas.height - ballRadius) {
+      if (x > paddleX && x < paddleX + paddleWidth) {
+        dy = -dy;
       } else {
-        this.LooseEvent();
+        LooseEvent();
       }
     }
 
-    if (rightPressed && this.paddleX < this.canvas.width - this.paddleWidth) {
-      this.paddleX += 7;
-    } else if (leftPressed && this.paddleX > 0) {
-      this.paddleX -= 7;
+    if (rightPressed && paddleX < canvas.width - paddleWidth) {
+      paddleX += 7;
+    } else if (leftPressed && paddleX > 0) {
+      paddleX -= 7;
     }
   };
-  move() {
-    this.x += this.dx;
-    this.y += this.dy;
-  }
-  LooseEvent() {
+  move = () => {
+    x += dx;
+    y += dy;
+  };
+  LooseEvent = () => {
     clearInterval(interval);
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.canvas.style.border = "solid 1px red";
-    this.looseinterval = setInterval(this.timer, 800);
-  }
-  timer() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.style.border = "solid 1px red";
+    looseinterval = setInterval(timer, 800);
+  };
+  timer = () => {
     if (tick == 0) {
       clearInterval(looseinterval);
       document.location.reload();
     }
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ctx.font = "21px Arial";
-    this.ctx.fillStyle = "#0095DD";
-    this.ctx.fillText(
-      "Game Over" + this.tick,
-      this.canvas.height / 2 - 10,
-      this.canvas.width / 2 - 10
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = "21px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText(
+      "You lose" + tick,
+      canvas.height / 2 - 10,
+      canvas.width / 2 - 10
     );
-    this.tick--;
-  }
+    tick--;
+  };
+  interval = setInterval(draw, 10);
 }

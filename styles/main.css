@@ -1,41 +1,65 @@
 .iridescent-text {
-    animation: 5s linear 0s infinite alternate iridescent-anim;
+  animation: 5s linear 0s infinite alternate iridescent-anim;
+}
+.clickable-icon {
+  border: 3px solid black;
+  height: 240px;
+  width: 200px;
+}
+.iridescent-border {
+  animation: 5s linear 0s infinite alternate border-anim;
+}
+.hide {
+  animation: 2s linear 0s 1 normal hide-anim;
+}
+.show {
+  animation: 2s linear 0s 1 normal show-anim;
+}
+.clickable-icon:hover {
+  cursor: pointer;
+  animation: 5s linear 0s infinite alternate border-anim;
+}
+
+@keyframes iridescent-anim {
+  from {
+    color: #658f82;
   }
-  .clickable-icon {
-    border: 3px solid black;
-    height: 240px;
-    width: 200px;
+  25% {
+    color: #b7d4ff;
   }
-  .clickable-icon:hover {
-    cursor: pointer;
-    animation: 5s linear 0s infinite alternate border-anim;
+  50% {
+    color: #fed876;
   }
-  @keyframes iridescent-anim {
-    from {
-      color: #658f82;
-    }
-    25% {
-      color: #b7d4ff;
-    }
-    50% {
-      color: #fed876;
-    }
-    75% {
-      color: #db6b88;
-    }
-    to {
-      color: #d8664d;
-    }
+  75% {
+    color: #db6b88;
   }
-  
-  @keyframes border-anim {
-    from {
-      border: 3px solid #658f82;
-  
-    }
-    to {
-      border: 3px solid #d8664d;
-  
-    }
+  to {
+    color: #d8664d;
   }
-  
+}
+
+@keyframes border-anim {
+  from {
+    border: 3px solid #658f82;
+  }
+  to {
+    border: 3px solid #d8664d;
+  }
+}
+@keyframes hide-anim {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes show-anim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
