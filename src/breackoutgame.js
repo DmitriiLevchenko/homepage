@@ -8,12 +8,12 @@ function initBreakOutGame(canvas, ...settings) {
   var dx = mindx;
   var dy = mindy;
   var paddleHeight = 10;
-  var paddleWidth = 90;
+  var paddleWidth = 120;
   var paddleX = (canvas.width - paddleWidth) / 2;
   var rightPressed = false;
   var leftPressed = false;
-  var brickRowCount = 6;
-  var brickColumnCount = 4;
+  var brickRowCount = 8;
+  var brickColumnCount = 5;
   var brickWidth = settings.brickWidth || 90;
   var brickHeight = settings.brickHeight || 25;
   var brickPadding = settings.brickPadding || 10;
