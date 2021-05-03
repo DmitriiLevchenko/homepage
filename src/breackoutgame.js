@@ -182,8 +182,8 @@ function initBreakOutGame(canvas, ...settings) {
     ctx.fillStyle = "#0095DD";
     ctx.fillText(
       "You lose" + tick,
-      canvas.height / 2 - 10,
-      canvas.width / 2 - 10
+      canvas.height / 2 - 40,
+      canvas.width / 2 - 40
     );
     tick--;
   };

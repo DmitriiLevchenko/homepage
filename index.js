@@ -6,9 +6,7 @@ async function onAvatarPressHandler() {
   const pageHeight = 700;
   const pageWidth = pageContent.offsetWidth - 40;
   const canvas = initCanvas(pageHeight, pageWidth);
-
   await Promise.race([ballTransform(avatar), hideContent(pageContent)]);
-  console.log("done");
   pageContent.innerHTML = "";
   pageContent.appendChild(canvas);
   await showContent(pageContent);
@@ -19,7 +17,6 @@ function initCanvas(height, width) {
   canvas.id = "canvas";
   canvas.width = width;
   canvas.height = height;
-
   canvas.classList.add("iridescent-border");
   return canvas;
 }
@@ -31,9 +28,8 @@ async function hideContent(content) {
   return timeout(2000);
 }
 async function ballTransform(content) {
+  content.className = "";
   content.classList.add("ball-transform");
-  content.classList.remove("avatar");
-  content.classList.remove("clickable-icon");
   content.addEventListener("animationend", function () {
     content.classList.remove("ball-transform");
   });
