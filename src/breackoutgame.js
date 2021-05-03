@@ -71,7 +71,9 @@ function initBreakOutGame(canvas, ...settings) {
             b.status -= 1;
             score++;
             if (score == brickRowCount * brickColumnCount * tick) {
-              alert("YOU WIN, CONGRATS!");
+              alert(
+                "YOU WIN, CONGRATS! `Break out` its a favorite game of my chikdhood and I decided to insert it as pervormance"
+              );
               document.location.reload();
             }
           }
