@@ -1,0 +1,87 @@
+.iridescent-text {
+  animation: 5s linear 0s infinite alternate iridescent-anim;
+}
+.clickable-icon {
+  border: 3px solid black;
+  height: 240px;
+  width: 200px;
+}
+.iridescent-border {
+  animation: 5s linear 0s infinite alternate border-anim;
+}
+.hide {
+  animation: 2s linear 0s 1 normal hide-anim;
+}
+.show {
+  animation: 2s linear 0s 1 normal show-anim;
+}
+.clickable-icon:hover {
+  cursor: pointer;
+  animation: 5s linear 0s infinite alternate border-anim;
+}
+.ball-transform {
+  position: absolute;
+  border: 3px solid black;
+  height: 240px;
+  width: 200px;
+  top: 50px;
+  left: 50px;
+  animation: 2s linear 0s 1 alternate ball-transform-anim;
+}
+
+@keyframes iridescent-anim {
+  from {
+    color: #658f82;
+  }
+  25% {
+    color: #b7d4ff;
+  }
+  50% {
+    color: #fed876;
+  }
+  75% {
+    color: #db6b88;
+  }
+  to {
+    color: #d8664d;
+  }
+}
+
+@keyframes border-anim {
+  from {
+    border: 3px solid #658f82;
+  }
+  to {
+    border: 3px solid #d8664d;
+  }
+}
+@keyframes hide-anim {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes show-anim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ball-transform-anim {
+  to {
+    position: absolute;
+    border-radius: 400px;
+    border: 1px solid #0095dd;
+    background-color: #0095dd;
+    width: 55px;
+    height: 45px;
+    top: 500px;
+    left: 400px;
+  }
+}
